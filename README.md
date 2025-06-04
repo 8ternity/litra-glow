@@ -1,26 +1,39 @@
 # Stream Deck Plugin pour Logitech Litra Glow 💡
 
-Plugin Stream Deck pour contrôler les lumières **Logitech Litra Glow** directement depuis votre Stream Deck.
+> **Note professionnelle :**
+> Ce projet a été réalisé à titre personnel, en grande partie avec l'assistance de l'intelligence artificielle. Je ne suis pas développeur de métier, mais passionné par l'automatisation et l'intégration de solutions pour la communauté. Ce plugin est donc le fruit d'un apprentissage et d'une expérimentation guidés par l'IA.
 
 ## ✨ Fonctionnalités
 
 - **🔘 Toggle Light** - Allumer/éteindre la lumière avec états visuels
-- **🔆 Set Brightness** - Contrôle de la luminosité (0-100%) avec curseur
-- **🌡️ Set Temperature** - Contrôle de la température de couleur (2700K-6500K) avec curseur
+- **🔆 Set Brightness** - Contrôle de la luminosité par pas de **25 lumens** à chaque clic (soit environ 10% de la plage totale, de 20 à 250 lumens)
+- **🌡️ Set Temperature** - Contrôle de la température de couleur par pas de **400 K** à chaque clic (soit environ 15% de la plage totale, de 2700K à 6500K)
 
 ## 🚀 Installation
 
-1. **Téléchargez** le fichier `com.litra.glow.streamDeckPlugin`
-2. **Double-cliquez** sur le fichier pour installer automatiquement
-3. **Glissez-déposez** les actions depuis la bibliothèque Stream Deck
-4. **Configurez** la luminosité/température via les inspecteurs de propriétés
+### Prérequis
 
-## 📋 Prérequis
+1. **Installer Node.js pour Windows**
+   - Télécharger et installer depuis : https://nodejs.org/en/download
 
-- **Stream Deck** (logiciel version 6.4+)
-- **Node.js** version 20+ 
-- **Logitech Litra Glow** connectée en USB
-- **Paquet litra** installé : `npm install -g litra`
+2. **Installer le projet GitHub "Logitech Litra Glow CLI 'litra'" avec Node dans PowerShell**
+   ```powershell
+   npm install --save litra
+   ```
+
+3. **Tester la détection de la lumière**
+   - Dans PowerShell, exécutez :
+   ```powershell
+   litra-devices
+   ```
+   - Vérifiez que votre Litra Glow est bien détectée.
+
+4. **Installer le plugin Stream Deck**
+   - Télécharger le fichier `com.litra.glow.v2.streamDeckPlugin`
+   - Double-cliquer sur le fichier pour installer le plugin dans Stream Deck
+
+5. **Ajouter les actions sur votre Stream Deck**
+   - Glissez-déposez les actions depuis la bibliothèque Stream Deck
 
 ## 🛠️ Développement
 
