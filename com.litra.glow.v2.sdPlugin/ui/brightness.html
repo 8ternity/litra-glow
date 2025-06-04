@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Litra Glow Brightness</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/sdpi.css">
+</head>
+<body>
+    <div class="sdpi-wrapper">
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">Brightness</div>
+            <div class="sdpi-item-value">
+                <input type="range" min="1" max="100" value="100" class="sdpi-item-value" id="brightness" oninput="updateBrightness()">
+                <span class="sdpi-item-value" id="brightnessValue">100%</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let websocket = null;
+        let pluginUUID = null;
+
+        function connectElgatoStreamDeckSocket(inPort, inPluginUUID, inRegisterEvent, inInfo) {
+            pluginUUID = inPluginUUID;
+            websocket = new WebSocket("ws://127.0.0.1:" + inPort);
+
+            websocket.onopen = function() {
+                const json = {
+                    event: inRegisterEvent,
+                    uuid: inPluginUUID
+                };
+                websocket.send(JSON.stringify(json));
+            };
+
+            websocket.onmessage = function(evt) {
+                const jsonObj = JSON.parse(evt.data);
+                const event = jsonObj.event;
+                const jsonPayload = jsonObj.payload || {};
+
+                if (event === "didReceiveSettings") {
+                    const settings = jsonPayload.settings || {};
+                    const brightness = settings.brightness || 100;
+                    document.getElementById("brightness").value = brightness;
+                    document.getElementById("brightnessValue").textContent = brightness + "%";
+                }
+            };
+        }
+
+        function updateBrightness() {
+            const brightness = document.getElementById("brightness").value;
+            document.getElementById("brightnessValue").textContent = brightness + "%";
+
+            if (websocket) {
+                const json = {
+                    event: "setSettings",
+                    context: pluginUUID,
+                    payload: {
+                        brightness: parseInt(brightness)
+                    }
+                };
+                websocket.send(JSON.stringify(json));
+            }
+        }
+    </script>
+</body>
+</html> 

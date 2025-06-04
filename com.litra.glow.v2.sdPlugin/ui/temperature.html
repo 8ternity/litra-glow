@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Temperature Settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/sdpi.css">
+</head>
+<body>
+    <div class="sdpi-wrapper">
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">Temperature (K)</div>
+            <select class="sdpi-item-value" id="temperature">
+                <option value="2700">2700K (Warm)</option>
+                <option value="3000">3000K</option>
+                <option value="3500">3500K</option>
+                <option value="4000">4000K</option>
+                <option value="4500">4500K</option>
+                <option value="5000">5000K</option>
+                <option value="5500">5500K</option>
+                <option value="6000">6000K</option>
+                <option value="6500" selected>6500K (Cool)</option>
+            </select>
+        </div>
+    </div>
+
+    <script>
+        let settings = {};
+
+        document.getElementById('temperature').addEventListener('change', function(e) {
+            const value = e.target.value;
+            settings.temperature = parseInt(value);
+            sendSettings();
+        });
+
+        function sendSettings() {
+            if (window.connectElgatoStreamDeckSocket) {
+                window.connectElgatoStreamDeckSocket.send(JSON.stringify({
+                    event: 'setSettings',
+                    context: window.uuid,
+                    payload: settings
+                }));
+            }
+        }
+
+        // Receive settings
+        window.connectElgatoStreamDeckSocket = {
+            send: function(data) {
+                // This will be overridden by StreamDeck
+            }
+        };
+    </script>
+</body>
+</html> 
