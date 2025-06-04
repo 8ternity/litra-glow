@@ -128,7 +128,7 @@ MIT - Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
 ## 🙏 Remerciements
 
-- [timrogers/litra](https://github.com/timrogers/litra) - Bibliothèque de contrôle Litra
+- [timrogers/litra](https://github.com/timrogers/litra) - Bibliothèque de contrôle des lumières Logitech Litra Glow, Beam & Beam LC par ligne de commande. Librairie indispensable au fonctionnement de ce projet.
 - [Elgato Stream Deck SDK](https://docs.elgato.com/sdk) - Documentation officielle
 - [Stream Deck CLI](https://docs.elgato.com/streamdeck/cli/intro) - Outils de développement
 
