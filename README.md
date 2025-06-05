@@ -9,6 +9,8 @@
 - **🔆 Set Brightness** - Brightness control in **25 lumens** increments per click (approximately 10% of the total range, from 20 to 250 lumens)
 - **🌡️ Set Temperature** - Color temperature control in **400 K** increments per click (approximately 15% of the total range, from 2700K to 6500K)
 
+- Allow for now to only control 1 Logitech Litra Glow. I have two Litra Glow for now on 2 differents StreamDeck (XL and Neo) maybe later i will try to evoluate the plugin to select which one you want to control. May need to renew CURSOR.AI subscription for it, i try to finish the plugin before the end of Free Month subscription.
+
 ## 🚀 Installation
 
 ### Prerequisites
