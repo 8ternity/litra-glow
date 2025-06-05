@@ -1,137 +1,137 @@
-# Stream Deck Plugin pour Logitech Litra Glow 💡
+# Stream Deck Plugin for Logitech Litra Glow 💡
 
-> **Note professionnelle :**
-> Ce projet a été réalisé à titre personnel, en grande partie avec l'assistance de l'intelligence artificielle. Je ne suis pas développeur de métier, mais passionné par l'automatisation et l'intégration de solutions pour la communauté. Ce plugin est donc le fruit d'un apprentissage et d'une expérimentation guidés par l'IA.
+> **Professional Note:**
+> This project was created as a personal endeavor, largely with the assistance of artificial intelligence. I am not a professional developer, but rather passionate about automation and integrating solutions for the community. This plugin is therefore the result of learning and experimentation guided by AI.
 
-## ✨ Fonctionnalités
+## ✨ Features
 
-- **🔘 Toggle Light** - Allumer/éteindre la lumière avec états visuels
-- **🔆 Set Brightness** - Contrôle de la luminosité par pas de **25 lumens** à chaque clic (soit environ 10% de la plage totale, de 20 à 250 lumens)
-- **🌡️ Set Temperature** - Contrôle de la température de couleur par pas de **400 K** à chaque clic (soit environ 15% de la plage totale, de 2700K à 6500K)
+- **🔘 Toggle Light** - Turn the light on/off with visual status feedback
+- **🔆 Set Brightness** - Brightness control in **25 lumens** increments per click (approximately 10% of the total range, from 20 to 250 lumens)
+- **🌡️ Set Temperature** - Color temperature control in **400 K** increments per click (approximately 15% of the total range, from 2700K to 6500K)
 
 ## 🚀 Installation
 
-### Prérequis
+### Prerequisites
 
-1. **Installer Node.js pour Windows**
-   - Télécharger et installer depuis : https://nodejs.org/en/download
+1. **Install Node.js for Windows**
+   - Download and install from: https://nodejs.org/en/download
 
-2. **Installer le projet GitHub "Logitech Litra Glow CLI 'litra'" avec Node dans PowerShell**
+2. **Install the GitHub project "Logitech Litra Glow CLI 'litra'" with Node in PowerShell**
    ```powershell
    npm install --save litra
    ```
 
-3. **Tester la détection de la lumière**
-   - Dans PowerShell, exécutez :
+3. **Test light detection**
+   - In PowerShell, run:
    ```powershell
    litra-devices
    ```
-   - Vérifiez que votre Litra Glow est bien détectée.
+   - Verify that your Litra Glow is properly detected.
 
-4. **Installer le plugin Stream Deck**
-   - Télécharger le fichier `com.litra.glow.v2.streamDeckPlugin`
-   - Double-cliquer sur le fichier pour installer le plugin dans Stream Deck
+4. **Install the Stream Deck plugin**
+   - Download the `com.litra.glow.v2.streamDeckPlugin` file
+   - Double-click the file to install the plugin in Stream Deck
 
-5. **Ajouter les actions sur votre Stream Deck**
-   - Glissez-déposez les actions depuis la bibliothèque Stream Deck
+5. **Add actions to your Stream Deck**
+   - Drag and drop actions from the Stream Deck library
 
-## 🛠️ Développement
+## 🛠️ Development
 
-### Structure du Projet
+### Project Structure
 
 ```
 📁 litra-glow-streamdeck/
-├── 📁 src/                          # Code source TypeScript
-│   ├── 📄 plugin.ts                 # Point d'entrée principal  
-│   └── 📁 actions/                  # Actions Stream Deck
-│       ├── 📄 toggle-light.ts       # Action Toggle
-│       ├── 📄 set-brightness.ts     # Action Luminosité
-│       └── 📄 set-temperature.ts    # Action Température
-├── 📁 com.litra.glow.sdPlugin/      # Plugin compilé
-│   ├── 📄 manifest.json             # Manifest du plugin
-│   ├── 📁 bin/                      # Code JavaScript compilé
-│   ├── 📁 imgs/                     # Icônes (72x72 + @2x)
+├── 📁 src/                          # TypeScript source code
+│   ├── 📄 plugin.ts                 # Main entry point  
+│   └── 📁 actions/                  # Stream Deck actions
+│       ├── 📄 toggle-light.ts       # Toggle action
+│       ├── 📄 set-brightness.ts     # Brightness action
+│       └── 📄 set-temperature.ts    # Temperature action
+├── 📁 com.litra.glow.sdPlugin/      # Compiled plugin
+│   ├── 📄 manifest.json             # Plugin manifest
+│   ├── 📁 bin/                      # Compiled JavaScript code
+│   ├── 📁 imgs/                     # Icons (72x72 + @2x)
 │   └── 📁 ui/                       # Property inspectors
-├── 📄 com.litra.glow.streamDeckPlugin # Package de distribution
-├── 📄 build-release.js              # Script de build
-├── 📄 package.json                  # Configuration npm
-├── 📄 rollup.config.mjs             # Configuration build
-├── 📄 tsconfig.json                 # Configuration TypeScript
-└── 📄 SUCCESS.md                    # Documentation de succès
+├── 📄 com.litra.glow.streamDeckPlugin # Distribution package
+├── 📄 build-release.js              # Build script
+├── 📄 package.json                  # npm configuration
+├── 📄 rollup.config.mjs             # Build configuration
+├── 📄 tsconfig.json                 # TypeScript configuration
+└── 📄 SUCCESS.md                    # Success documentation
 ```
 
-### Commandes de Développement
+### Development Commands
 
 ```bash
-# Installation des dépendances
+# Install dependencies
 npm install
 
-# Build du plugin
+# Build plugin
 npm run build
 
-# Build et package complet
+# Complete build and package
 node build-release.js
 
-# Commandes Stream Deck CLI
-streamdeck dev                              # Mode développement
+# Stream Deck CLI commands
+streamdeck dev                              # Development mode
 streamdeck validate com.litra.glow.sdPlugin # Validation
-streamdeck restart com.litra.glow          # Redémarrage
+streamdeck restart com.litra.glow          # Restart
 streamdeck pack com.litra.glow.sdPlugin    # Packaging
 ```
 
-### Test des Commandes Litra
+### Litra Command Testing
 
 ```bash
-# Vérifier les appareils connectés
+# Check connected devices
 npx litra-devices
 
-# Contrôle manuel
+# Manual control
 npx litra-toggle                    # Toggle on/off
-npx litra-brightness 75             # Luminosité 75%
-npx litra-temperature-k 4000        # Température 4000K
+npx litra-brightness 75             # 75% brightness
+npx litra-temperature-k 4000        # 4000K temperature
 ```
 
-## 🎯 Architecture Technique
+## 🎯 Technical Architecture
 
-- **Framework** : [@elgato/streamdeck](https://www.npmjs.com/package/@elgato/streamdeck) SDK + Stream Deck CLI
-- **Langage** : TypeScript → JavaScript (via Rollup)
-- **Intégration** : Commandes CLI `npx litra-*` via `execSync`
-- **Icônes** : PNG générées programmatiquement (72x72 + @2x variants)
-- **Validation** : Stream Deck CLI officiel
+- **Framework**: [@elgato/streamdeck](https://www.npmjs.com/package/@elgato/streamdeck) SDK + Stream Deck CLI
+- **Language**: TypeScript → JavaScript (via Rollup)
+- **Integration**: CLI commands `npx litra-*` via `execSync`
+- **Icons**: Programmatically generated PNG (72x72 + @2x variants)
+- **Validation**: Official Stream Deck CLI
 
-## 📦 Package de Distribution
+## 📦 Distribution Package
 
-- **Fichier** : `com.litra.glow.streamDeckPlugin` (~64 KB)
-- **Validation** : ✅ Stream Deck CLI officiel
-- **Contenu** : 36 fichiers, 766.8 KiB décompressé
-- **Icônes** : Haute résolution avec variants @2x
+- **File**: `com.litra.glow.streamDeckPlugin` (~64 KB)
+- **Validation**: ✅ Official Stream Deck CLI
+- **Content**: 36 files, 766.8 KiB uncompressed
+- **Icons**: High resolution with @2x variants
 
 ## 🆘 Support
 
-### Actions Disponibles
+### Available Actions
 
 | Action | UUID | Description |
 |--------|------|-------------|
-| Toggle Light | `com.litra.glow.toggle` | Allumer/éteindre avec feedback visuel |
-| Set Brightness | `com.litra.glow.brightness` | Curseur 0-100% avec property inspector |
-| Set Temperature | `com.litra.glow.temperature` | Curseur 2700K-6500K avec property inspector |
+| Toggle Light | `com.litra.glow.toggle` | Turn on/off with visual feedback |
+| Set Brightness | `com.litra.glow.brightness` | 0-100% slider with property inspector |
+| Set Temperature | `com.litra.glow.temperature` | 2700K-6500K slider with property inspector |
 
-### Résolution de Problèmes
+### Troubleshooting
 
-1. **Plugin non détecté** : Vérifiez que `litra` est installé globalement
-2. **Pas de réponse** : Vérifiez la connexion USB de la Litra Glow
-3. **Erreurs de build** : Assurez-vous d'avoir Node.js 20+
+1. **Plugin not detected**: Verify that `litra` is installed globally
+2. **No response**: Check the USB connection of the Litra Glow
+3. **Build errors**: Make sure you have Node.js 20+
 
-## 📄 Licence
+## 📄 License
 
-MIT - Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+MIT - See the [LICENSE](LICENSE) file for more details.
 
-## 🙏 Remerciements
+## 🙏 Acknowledgments
 
-- [timrogers/litra](https://github.com/timrogers/litra) - Bibliothèque de contrôle des lumières Logitech Litra Glow, Beam & Beam LC par ligne de commande. Librairie indispensable au fonctionnement de ce projet.
-- [Elgato Stream Deck SDK](https://docs.elgato.com/sdk) - Documentation officielle
-- [Stream Deck CLI](https://docs.elgato.com/streamdeck/cli/intro) - Outils de développement
+- [timrogers/litra](https://github.com/timrogers/litra) - Command-line library for controlling Logitech Litra Glow, Beam & Beam LC lights. Essential library for this project's functionality.
+- [Elgato Stream Deck SDK](https://docs.elgato.com/sdk) - Official documentation
+- [Stream Deck CLI](https://docs.elgato.com/streamdeck/cli/intro) - Development tools
 
 ---
 
-**🎮 Plugin prêt à l'emploi ! Profitez du contrôle total de vos lumières Litra depuis votre Stream Deck !** 
+**🎮 Plugin ready to use! Enjoy full control of your Litra lights from your Stream Deck!**
