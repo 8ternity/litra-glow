@@ -62,7 +62,7 @@
 └── 📄 SUCCESS.md                    # Success documentation
 ```
 
-### Development Commands
+### Source Development Commands
 
 ```bash
 # Install dependencies
