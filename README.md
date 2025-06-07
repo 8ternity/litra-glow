@@ -80,6 +80,9 @@
 # Install dependencies
 npm install
 
+# Node Express and CORS for Bridge Development 
+npm install --save-dev @types/express @types/cors
+
 # Build plugin
 npm run build
 
