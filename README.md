@@ -5,6 +5,7 @@
 
 ## ✨ Features
 
+- **Link a specific Litra Light to any action control** - You can now link any of your multiple Logitech Litra Glow Lights to any action for targeted light control
 - **🔘 Toggle Light** - Turn the light on/off with visual status feedback
 - **🔆 Set Brightness** - Brightness control in **25 lumens** increments per click (approximately 10% of the total range, from 20 to 250 lumens)
 - **🌡️ Set Temperature** - Color temperature control in **400 K** increments per click (approximately 15% of the total range, from 2700K to 6500K)
