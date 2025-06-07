@@ -30,13 +30,6 @@
    ```
    - Verify that your Litra Glow is properly detected.
 
-4. **Install plugin dependencies**
-   - In the plugin folder, run:
-   ```powershell
-   npm install --production
-   ```
-   This will install all required dependencies (including Express and CORS for the bridge). **You do NOT need to install @types/express or @types/cors as a user.**
-   
    > **Note for developers:**
    > If you want to build or modify the plugin source, you should also run:
    > ```powershell
@@ -44,11 +37,11 @@
    > ```
    > These are only needed for TypeScript development, not for running the plugin.
 
-5. **Install the Stream Deck plugin**
+4. **Install the Stream Deck plugin**
    - Download the `com.litra.glow.v2.streamDeckPlugin` file
    - Double-click the file to install the plugin in Stream Deck
 
-6. **Add actions to your Stream Deck**
+5. **Add actions to your Stream Deck**
    - Drag and drop actions from the Stream Deck library
 
 ### Bridge litra-devices
