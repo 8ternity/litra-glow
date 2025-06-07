@@ -106,6 +106,10 @@ npx litra-devices
 npx litra-toggle                    # Toggle on/off
 npx litra-brightness 75             # 75% brightness
 npx litra-temperature-k 4000        # 4000K temperature
+
+# Bridge multi Logitech serial numbers detection
+http://localhost:3000/litra-devices
+
 ```
 
 ## 🎯 Technical Architecture
