@@ -1,6 +1,7 @@
 import streamDeck from '@elgato/streamdeck';
 import { writeFileSync, appendFileSync } from 'fs';
 import { join } from 'path';
+import { startLitraDevicesBridge } from './litra-devices-bridge.js';
 
 const logFile = join(__dirname, '..', 'plugin-debug.log');
 
@@ -73,6 +74,9 @@ async function main() {
         streamDeck.actions.registerAction(new ToggleLightAction());
 
         console.log('[Plugin] All actions registered');
+
+        // Lancer le bridge litra-devices
+        startLitraDevicesBridge();
 
         // Connect to Stream Deck and wait for connection
         console.log('[Plugin] Connecting to Stream Deck...');

@@ -1,6 +1,6 @@
 # Changelog – Litra Glow Control
 
-## [2.2.0.0] - 2024-xx-xx
+## [2.2.1.0] - 2024-xx-xx
 
 ### 🚀 Major Features
 
@@ -31,11 +31,14 @@
 
 - Fixed label alignment in the Property Inspector
 - Unified style for all fields and labels across actions
+- **Fixed a typo in the dropdown HTML (`class` instead of `clas`) that prevented detected lights from displaying correctly in the Property Inspector.**
+- **Resolved: The bridge for device detection (`litra-devices-bridge`) is now started automatically with the plugin, ensuring the dropdown always loads the list of active lights in JSON.**
 
 ### 🛠️ Technical
 
 - Refactored HTML/CSS structure for better scalability
 - Added a utility function to dynamically load localized labels in the Property Inspector
+- **Integrated the litra-devices bridge directly in the plugin code (TypeScript), so it launches automatically at plugin startup. No manual launch required.**
 
 ---
 
