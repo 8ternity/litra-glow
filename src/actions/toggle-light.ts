@@ -27,11 +27,15 @@ const SVG_LIGHT_OFF_PATH = path.join(__dirname, '../../imgs/litra_glow_off.svg')
 export class ToggleLightAction extends SingletonAction<Settings> {
   private currentState = 0; // Track state internally
   
-  private async executeLitraCommand(command: string): Promise<string> {
+  private async executeLitraCommand(command: string, serialNumber?: string): Promise<string> {
     try {
-      logToFile(`[executeLitraCommand] Exécution: npx litra-${command}`);
+      let cmd = `npx litra-${command}`;
+      if (serialNumber && !command.startsWith('devices')) {
+        cmd += ` --serial-number ${serialNumber}`;
+      }
+      logToFile(`[executeLitraCommand] Exécution: ${cmd}`);
       
-      const result = execSync(`npx litra-${command}`, {
+      const result = execSync(cmd, {
         encoding: 'utf8',
         timeout: 10000,
         cwd: process.cwd(),
@@ -50,13 +54,29 @@ export class ToggleLightAction extends SingletonAction<Settings> {
     }
   }
 
-  private async checkLightStatus(): Promise<boolean> {
+  private async checkLightStatus(serialNumber?: string): Promise<boolean> {
     try {
       logToFile(`[checkLightStatus] Vérification de l'état de la lumière...`);
       const devices = await this.executeLitraCommand('devices');
-      const isOn = devices.includes(': On ') || devices.includes('💡') || devices.toLowerCase().includes('on');
-      logToFile(`[checkLightStatus] Lumière ${isOn ? 'ON' : 'OFF'}`);
-      return isOn;
+      logToFile(`[checkLightStatus] Sortie litra-devices:\n${devices}`);
+
+      if (serialNumber) {
+        // Cherche le bloc correspondant au numéro de série
+        const regex = new RegExp(`- [^\n]+\\(${serialNumber}\\): (On|Off)[^\n]*`, 'm');
+        const match = regex.exec(devices);
+        if (match && match[1]) {
+          const isOn = match[1].toLowerCase() === 'on';
+          logToFile(`[checkLightStatus] Lumière ${serialNumber} ${isOn ? 'ON' : 'OFF'}`);
+          return isOn;
+        }
+        logToFile(`[checkLightStatus] Numéro de série ${serialNumber} non trouvé dans la sortie.`);
+        return false;
+      } else {
+        // Ancien comportement : premier bloc trouvé
+        const isOn = devices.includes(': On ') || devices.includes('💡') || devices.toLowerCase().includes('on');
+        logToFile(`[checkLightStatus] Lumière (premier bloc) ${isOn ? 'ON' : 'OFF'}`);
+        return isOn;
+      }
     } catch (error) {
       logToFile(`[checkLightStatus] Erreur: ${error}`);
       return false;
@@ -90,8 +110,10 @@ export class ToggleLightAction extends SingletonAction<Settings> {
    */
   async onWillAppear(ev: WillAppearEvent<Settings>): Promise<void> {
     logToFile(`[onWillAppear] Appelée`);
+    logToFile(`[onWillAppear] serialNumber dans settings: ${ev.payload.settings?.serialNumber}`);
     try {
-      const lightIsOn = await this.checkLightStatus();
+      const serialNumber = ev.payload.settings?.serialNumber;
+      const lightIsOn = await this.checkLightStatus(serialNumber);
       this.currentState = lightIsOn ? 1 : 0;
       logToFile(`[onWillAppear] État initial: ${this.currentState}`);
       
@@ -118,8 +140,10 @@ export class ToggleLightAction extends SingletonAction<Settings> {
    */
   async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
     logToFile(`[onKeyDown] Appelée - état courant: ${this.currentState}`);
+    logToFile(`[onKeyDown] serialNumber dans settings: ${ev.payload.settings?.serialNumber}`);
     try {
-      await this.executeLitraCommand('toggle');
+      const serialNumber = ev.payload.settings?.serialNumber;
+      await this.executeLitraCommand('toggle', serialNumber);
       this.currentState = this.currentState === 0 ? 1 : 0;
       logToFile(`[onKeyDown] Nouvel état: ${this.currentState}`);
       
@@ -145,5 +169,5 @@ export class ToggleLightAction extends SingletonAction<Settings> {
  * Settings for {@link ToggleLightAction}.
  */
 type Settings = {
-  // No settings needed for toggle action
+  serialNumber?: string;
 }; 

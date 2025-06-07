@@ -38,14 +38,25 @@ function logToFile(message: string) {
   }
 }
 
+type Settings = {
+  serialNumber?: string;
+  brightness?: number;
+};
+
 @action({ UUID: 'com.litra.glow.v2.brightness.down' })
 export class BrightnessDownAction extends SingletonAction<Settings> {
   
-  private async executeLitraCommand(command: string): Promise<string> {
+  private lastRequestedLumens: number | null = null;
+
+  private async executeLitraCommand(command: string, serialNumber?: string): Promise<string> {
     try {
-      logToFile(`[executeLitraCommand] Exécution: npx litra-${command}`);
+      let cmd = `npx litra-${command}`;
+      if (serialNumber && !command.startsWith('devices')) {
+        cmd += ` --serial-number ${serialNumber}`;
+      }
+      logToFile(`[executeLitraCommand] Exécution: ${cmd}`);
       
-      const result = execSync(`npx litra-${command}`, {
+      const result = execSync(cmd, {
         encoding: 'utf8',
         timeout: 10000,
         cwd: process.cwd(),
@@ -64,25 +75,31 @@ export class BrightnessDownAction extends SingletonAction<Settings> {
     }
   }
 
-  private async getCurrentBrightness(): Promise<number> {
+  private async getCurrentBrightness(serialNumber?: string): Promise<number> {
     try {
-      // Lecture de la luminosité actuelle
       const output = await this.executeLitraCommand('devices');
-      
-      // Log de la sortie complète pour débogage
       logToFile(`[getCurrentBrightness] Sortie complète de litra-devices:\n${output}`);
-      
-      // Recherche du pattern avec une regex très souple
-      const brightnessRegex = /Brightness:\s*(\d+)\s*lm/;
-      const match = brightnessRegex.exec(output);
-      
-      if (match && match[1]) {
-        const lumens = parseInt(match[1], 10);
-        logToFile(`[getCurrentBrightness] Luminosité trouvée: ${lumens} lm`);
-        return lumens;
+
+      // Si serialNumber est défini, on cherche le bloc correspondant
+      if (serialNumber) {
+        const regex = new RegExp(`\\(${serialNumber}\\):[^\\n]*\\n(?:  - .+\\n)*?  - Brightness: (\\d+)\\s*lm`, 'm');
+        const match = regex.exec(output);
+        if (match && match[1]) {
+          const lumens = parseInt(match[1], 10);
+          logToFile(`[getCurrentBrightness] Luminosité trouvée pour ${serialNumber}: ${lumens} lm`);
+          return lumens;
+        }
+      } else {
+        // Ancien comportement : première valeur trouvée
+        const brightnessRegex = /Brightness:\s*(\d+)\s*lm/;
+        const match = brightnessRegex.exec(output);
+        if (match && match[1]) {
+          const lumens = parseInt(match[1], 10);
+          logToFile(`[getCurrentBrightness] Luminosité trouvée: ${lumens} lm`);
+          return lumens;
+        }
       }
-      
-      // En cas d'échec, on affiche un message détaillé
+
       logToFile(`[getCurrentBrightness] Pattern non trouvé dans la sortie!`);
       logToFile(`[getCurrentBrightness] Utilisation de la valeur par défaut: ${MIN_LUMENS} lm`);
       return MIN_LUMENS;
@@ -104,8 +121,10 @@ export class BrightnessDownAction extends SingletonAction<Settings> {
 
   async onWillAppear(ev: WillAppearEvent<Settings>): Promise<void> {
     logToFile(`[onWillAppear] Appelée`);
+    logToFile(`[onWillAppear] serialNumber dans settings: ${ev.payload.settings?.serialNumber}`);
     try {
-      const currentLumens = await this.getCurrentBrightness();
+      const serialNumber = ev.payload.settings?.serialNumber;
+      const currentLumens = await this.getCurrentBrightness(serialNumber);
       await ev.action.setTitle(`-25 lm`);
       
       // Appliquer l'icône personnalisée
@@ -123,39 +142,41 @@ export class BrightnessDownAction extends SingletonAction<Settings> {
 
   async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
     logToFile(`[onKeyDown] Appelée`);
+    logToFile(`[onKeyDown] serialNumber dans settings: ${ev.payload.settings?.serialNumber}`);
     try {
-      // Lecture de la luminosité actuelle
-      const currentLumens = await this.getCurrentBrightness();
-      logToFile(`[onKeyDown] Luminosité actuelle: ${currentLumens} lm`);
-      
+      const serialNumber = ev.payload.settings?.serialNumber;
+      let currentLumens: number;
+      if (this.lastRequestedLumens !== null) {
+        currentLumens = this.lastRequestedLumens;
+        logToFile(`[onKeyDown] Utilisation de lastRequestedLumens: ${currentLumens} lm`);
+      } else {
+        currentLumens = await this.getCurrentBrightness(serialNumber);
+        logToFile(`[onKeyDown] Luminosité actuelle: ${currentLumens} lm`);
+      }
       // Si déjà au minimum, ne rien faire
       if (currentLumens <= MIN_LUMENS) {
         logToFile(`[onKeyDown] Déjà au minimum (${MIN_LUMENS} lm), aucune action`);
         await ev.action.setTitle(`-25 lm`);
         return;
       }
-      
       // Calculer nouvelle valeur (simplement -25 lumens)
       const newLumens = Math.max(MIN_LUMENS, currentLumens - STEP_LUMENS);
       logToFile(`[onKeyDown] Nouvelle luminosité calculée: ${newLumens} lm (${currentLumens} - ${STEP_LUMENS})`);
-      
+      this.lastRequestedLumens = newLumens;
       // Application de la nouvelle luminosité
       logToFile(`[onKeyDown] Application de la nouvelle luminosité: ${newLumens} lm`);
-      await this.executeLitraCommand(`brightness-lm ${newLumens}`);
-      
+      await this.executeLitraCommand(`brightness-lm ${newLumens}`, serialNumber);
       // Vérification après application
-      const verifiedLumens = await this.getCurrentBrightness();
+      const verifiedLumens = await this.getCurrentBrightness(serialNumber);
+      this.lastRequestedLumens = null;
       logToFile(`[onKeyDown] Vérification après application: ${verifiedLumens} lm`);
-      
       // Mise à jour de l'interface
       await ev.action.setTitle(`-25 lm`);
-      
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Erreur inconnue';
       logToFile(`[onKeyDown] Erreur: ${message}`);
       await ev.action.showAlert();
+      this.lastRequestedLumens = null;
     }
   }
 }
-
-type Settings = Record<string, never>; // Pas de paramètres nécessaires

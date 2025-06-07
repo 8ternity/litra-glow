@@ -39,14 +39,21 @@ function logToFile(message: string) {
   }
 }
 
+type Settings = {
+  serialNumber?: string;
+};
+
 @action({ UUID: 'com.litra.glow.v2.temperature.up' })
 export class TemperatureUpAction extends SingletonAction<Settings> {
   
-  private async executeLitraCommand(command: string): Promise<string> {
+  private async executeLitraCommand(command: string, serialNumber?: string): Promise<string> {
     try {
-      logToFile(`[executeLitraCommand] Exécution: npx litra-${command}`);
-      
-      const result = execSync(`npx litra-${command}`, {
+      let cmd = `npx litra-${command}`;
+      if (serialNumber && !command.startsWith('devices')) {
+        cmd += ` --serial-number ${serialNumber}`;
+      }
+      logToFile(`[executeLitraCommand] Exécution: ${cmd}`);
+      const result = execSync(cmd, {
         encoding: 'utf8',
         timeout: 10000,
         cwd: process.cwd(),
@@ -56,7 +63,6 @@ export class TemperatureUpAction extends SingletonAction<Settings> {
           NODE_PATH: path.join(process.cwd(), 'node_modules')
         }
       });
-      
       logToFile(`[executeLitraCommand] Succès: ${result.trim()}`);
       return result.trim();
     } catch (error: any) {
@@ -65,25 +71,27 @@ export class TemperatureUpAction extends SingletonAction<Settings> {
     }
   }
 
-  private async getCurrentTemperature(): Promise<number> {
+  private async getCurrentTemperature(serialNumber?: string): Promise<number> {
     try {
-      // Lecture de la température actuelle
       const output = await this.executeLitraCommand('devices');
-      
-      // Log de la sortie complète pour débogage
       logToFile(`[getCurrentTemperature] Sortie complète de litra-devices:\n${output}`);
-      
-      // Recherche du pattern avec une regex
-      const temperatureRegex = /Temperature:\s*(\d+)\s*K/;
-      const match = temperatureRegex.exec(output);
-      
-      if (match && match[1]) {
-        const kelvin = parseInt(match[1], 10);
-        logToFile(`[getCurrentTemperature] Température trouvée: ${kelvin} K`);
-        return kelvin;
+      if (serialNumber) {
+        const regex = new RegExp(`\\(${serialNumber}\\):[^\\n]*\\n(?:  - .+\\n)*?  - Temperature: (\\d+)\\s*K`, 'm');
+        const match = regex.exec(output);
+        if (match && match[1]) {
+          const kelvin = parseInt(match[1], 10);
+          logToFile(`[getCurrentTemperature] Température trouvée pour ${serialNumber}: ${kelvin} K`);
+          return kelvin;
+        }
+      } else {
+        const temperatureRegex = /Temperature:\s*(\d+)\s*K/;
+        const match = temperatureRegex.exec(output);
+        if (match && match[1]) {
+          const kelvin = parseInt(match[1], 10);
+          logToFile(`[getCurrentTemperature] Température trouvée: ${kelvin} K`);
+          return kelvin;
+        }
       }
-      
-      // En cas d'échec, on affiche un message détaillé
       logToFile(`[getCurrentTemperature] Pattern non trouvé dans la sortie!`);
       logToFile(`[getCurrentTemperature] Utilisation de la valeur par défaut: ${MAX_TEMP} K`);
       return MAX_TEMP;
@@ -105,8 +113,10 @@ export class TemperatureUpAction extends SingletonAction<Settings> {
 
   async onWillAppear(ev: WillAppearEvent<Settings>): Promise<void> {
     logToFile(`[onWillAppear] Appelée`);
+    logToFile(`[onWillAppear] serialNumber dans settings: ${ev.payload.settings?.serialNumber}`);
     try {
-      const currentTemp = await this.getCurrentTemperature();
+      const serialNumber = ev.payload.settings?.serialNumber;
+      const currentTemp = await this.getCurrentTemperature(serialNumber);
       await ev.action.setTitle(`+400 K`);
       
       // Appliquer l'icône personnalisée
@@ -124,9 +134,10 @@ export class TemperatureUpAction extends SingletonAction<Settings> {
 
   async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
     logToFile(`[onKeyDown] Appelée`);
+    logToFile(`[onKeyDown] serialNumber dans settings: ${ev.payload.settings?.serialNumber}`);
     try {
-      // Lecture de la température actuelle
-      const currentTemp = await this.getCurrentTemperature();
+      const serialNumber = ev.payload.settings?.serialNumber;
+      const currentTemp = await this.getCurrentTemperature(serialNumber);
       logToFile(`[onKeyDown] Température actuelle: ${currentTemp} K`);
       
       // Si déjà au maximum, ne rien faire
@@ -146,10 +157,10 @@ export class TemperatureUpAction extends SingletonAction<Settings> {
       
       // Application de la nouvelle température
       logToFile(`[onKeyDown] Application de la nouvelle température: ${newTemp} K`);
-      await this.executeLitraCommand(`temperature-k ${newTemp}`);
+      await this.executeLitraCommand(`temperature-k ${newTemp}`, serialNumber);
       
       // Vérification après application
-      const verifiedTemp = await this.getCurrentTemperature();
+      const verifiedTemp = await this.getCurrentTemperature(serialNumber);
       logToFile(`[onKeyDown] Vérification après application: ${verifiedTemp} K`);
       
       // Mise à jour de l'interface
@@ -161,6 +172,4 @@ export class TemperatureUpAction extends SingletonAction<Settings> {
       await ev.action.showAlert();
     }
   }
-}
-
-type Settings = Record<string, never>; // Pas de paramètres nécessaires 
+} 

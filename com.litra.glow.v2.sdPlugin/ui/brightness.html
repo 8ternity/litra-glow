@@ -3,61 +3,113 @@
 <head>
     <title>Litra Glow Brightness</title>
     <meta charset="utf-8" />
+    <script src="sdpi-components.js"></script>
     <link rel="stylesheet" href="../css/sdpi.css">
 </head>
 <body>
     <div class="sdpi-wrapper">
-        <div class="sdpi-item">
-            <div class="sdpi-item-label">Brightness</div>
-            <div class="sdpi-item-value">
-                <input type="range" min="1" max="100" value="100" class="sdpi-item-value" id="brightness" oninput="updateBrightness()">
-                <span class="sdpi-item-value" id="brightnessValue">100%</span>
+        <div class="sdpi-grid">
+        <div class="sdpi-grid-label">Lumière :</div>
+            <div clas="sdpi-grid-value">    
+                <select class="sdpi-item-value" id="serialDropdown"></select>
             </div>
         </div>
     </div>
-
     <script>
         let websocket = null;
         let pluginUUID = null;
-
+        let currentSettings = {};
+        let initialized = false;
+        function log(msg) { console.log('[Litra PI]', msg); }
         function connectElgatoStreamDeckSocket(inPort, inPluginUUID, inRegisterEvent, inInfo) {
             pluginUUID = inPluginUUID;
             websocket = new WebSocket("ws://127.0.0.1:" + inPort);
-
             websocket.onopen = function() {
-                const json = {
-                    event: inRegisterEvent,
-                    uuid: inPluginUUID
-                };
+                const json = { event: inRegisterEvent, uuid: inPluginUUID };
                 websocket.send(JSON.stringify(json));
+                log('WebSocket opened, sent registration');
+                websocket.send(JSON.stringify({ event: "getSettings", context: pluginUUID }));
+                refreshDevices();
             };
-
             websocket.onmessage = function(evt) {
                 const jsonObj = JSON.parse(evt.data);
                 const event = jsonObj.event;
                 const jsonPayload = jsonObj.payload || {};
-
                 if (event === "didReceiveSettings") {
-                    const settings = jsonPayload.settings || {};
-                    const brightness = settings.brightness || 100;
-                    document.getElementById("brightness").value = brightness;
-                    document.getElementById("brightnessValue").textContent = brightness + "%";
+                    currentSettings = jsonPayload.settings || {};
+                    log('didReceiveSettings: ' + JSON.stringify(currentSettings));
+                    refreshDevices();
                 }
             };
         }
-
-        function updateBrightness() {
-            const brightness = document.getElementById("brightness").value;
-            document.getElementById("brightnessValue").textContent = brightness + "%";
-
+        function refreshDevices() {
+            log('refreshDevices: valeur assignée = ' + (currentSettings.serialNumber || 'aucune'));
+            fetch('http://localhost:3000/litra-devices')
+                .then(response => response.json())
+                .then(devices => {
+                    log('Devices reçus: ' + JSON.stringify(devices));
+                    const dropdown = document.getElementById('serialDropdown');
+                    dropdown.innerHTML = '';
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.text = 'Aucun (défaut)';
+                    dropdown.appendChild(defaultOption);
+                    devices.forEach(device => {
+                        log('Ajout device au dropdown: ' + device.serial_number);
+                        const option = document.createElement('option');
+                        option.value = device.serial_number;
+                        option.text = `${device.name} (${device.serial_number})`;
+                        dropdown.appendChild(option);
+                    });
+                    const serialAssigned = currentSettings.serialNumber;
+                    if (serialAssigned && !Array.from(dropdown.options).some(opt => opt.value === serialAssigned)) {
+                        const missingOption = document.createElement('option');
+                        missingOption.value = serialAssigned;
+                        missingOption.text = `Non détecté (${serialAssigned})`;
+                        dropdown.appendChild(missingOption);
+                        log('Dropdown: Ajout de l\'option non détectée pour ' + serialAssigned);
+                    }
+                    dropdown.value = serialAssigned || '';
+                    if (serialAssigned) {
+                        log('Dropdown initialized with value: ' + serialAssigned);
+                    } else {
+                        log('Dropdown initialized with default value (serial non trouvé ou non assigné)');
+                    }
+                    if (!initialized) {
+                        saveSerialNumber(dropdown.value);
+                        initialized = true;
+                    }
+                })
+                .catch((err) => {
+                    log('Erreur fetch litra-devices: ' + err);
+                    const dropdown = document.getElementById('serialDropdown');
+                    dropdown.innerHTML = '';
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.text = 'Aucun (défaut)';
+                    dropdown.appendChild(defaultOption);
+                    dropdown.value = '';
+                    log('Dropdown fallback: only default option');
+                });
+        }
+        document.getElementById('serialDropdown').addEventListener('change', function() {
+            log('Dropdown changed, new value: ' + this.value);
+            saveSerialNumber(this.value);
+        });
+        function saveSerialNumber(serialNumber) {
             if (websocket) {
+                const payload = {};
+                if (serialNumber) {
+                    payload.serialNumber = serialNumber;
+                } else {
+                    payload.serialNumber = null;
+                }
                 const json = {
                     event: "setSettings",
                     context: pluginUUID,
-                    payload: {
-                        brightness: parseInt(brightness)
-                    }
+                    payload
                 };
+                log('Sending setSettings: ' + JSON.stringify(payload));
                 websocket.send(JSON.stringify(json));
             }
         }

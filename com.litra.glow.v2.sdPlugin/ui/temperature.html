@@ -2,53 +2,119 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Temperature Settings</title>
+    <title>Litra Glow Temperature</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/sdpi.css">
+    <script src="sdpi-components.js"></script>
+    <link rel="stylesheet" href="../css/sdpi.css">
 </head>
 <body>
     <div class="sdpi-wrapper">
-        <div class="sdpi-item">
-            <div class="sdpi-item-label">Temperature (K)</div>
-            <select class="sdpi-item-value" id="temperature">
-                <option value="2700">2700K (Warm)</option>
-                <option value="3000">3000K</option>
-                <option value="3500">3500K</option>
-                <option value="4000">4000K</option>
-                <option value="4500">4500K</option>
-                <option value="5000">5000K</option>
-                <option value="5500">5500K</option>
-                <option value="6000">6000K</option>
-                <option value="6500" selected>6500K (Cool)</option>
-            </select>
+        <div class="sdpi-grid">
+        <div class="sdpi-grid-label">Lumière :</div>
+            <div clas="sdpi-grid-value">    
+                <select class="sdpi-item-value" id="serialDropdown"></select>
+            </div>
         </div>
     </div>
 
     <script>
-        let settings = {};
-
-        document.getElementById('temperature').addEventListener('change', function(e) {
-            const value = e.target.value;
-            settings.temperature = parseInt(value);
-            sendSettings();
+        let websocket = null;
+        let pluginUUID = null;
+        let currentSettings = {};
+        let initialized = false;
+        function log(msg) { console.log('[Litra PI]', msg); }
+        function connectElgatoStreamDeckSocket(inPort, inPluginUUID, inRegisterEvent, inInfo) {
+            pluginUUID = inPluginUUID;
+            websocket = new WebSocket("ws://127.0.0.1:" + inPort);
+            websocket.onopen = function() {
+                const json = { event: inRegisterEvent, uuid: inPluginUUID };
+                websocket.send(JSON.stringify(json));
+                log('WebSocket opened, sent registration');
+                websocket.send(JSON.stringify({ event: "getSettings", context: pluginUUID }));
+                refreshDevices();
+            };
+            websocket.onmessage = function(evt) {
+                const jsonObj = JSON.parse(evt.data);
+                const event = jsonObj.event;
+                const jsonPayload = jsonObj.payload || {};
+                if (event === "didReceiveSettings") {
+                    currentSettings = jsonPayload.settings || {};
+                    log('didReceiveSettings: ' + JSON.stringify(currentSettings));
+                    refreshDevices();
+                }
+            };
+        }
+        function refreshDevices() {
+            log('refreshDevices: valeur assignée = ' + (currentSettings.serialNumber || 'aucune'));
+            fetch('http://localhost:3000/litra-devices')
+                .then(response => response.json())
+                .then(devices => {
+                    log('Devices reçus: ' + JSON.stringify(devices));
+                    const dropdown = document.getElementById('serialDropdown');
+                    dropdown.innerHTML = '';
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.text = 'Aucun (défaut)';
+                    dropdown.appendChild(defaultOption);
+                    devices.forEach(device => {
+                        log('Ajout device au dropdown: ' + device.serial_number);
+                        const option = document.createElement('option');
+                        option.value = device.serial_number;
+                        option.text = `${device.name} (${device.serial_number})`;
+                        dropdown.appendChild(option);
+                    });
+                    const serialAssigned = currentSettings.serialNumber;
+                    if (serialAssigned && !Array.from(dropdown.options).some(opt => opt.value === serialAssigned)) {
+                        const missingOption = document.createElement('option');
+                        missingOption.value = serialAssigned;
+                        missingOption.text = `Non détecté (${serialAssigned})`;
+                        dropdown.appendChild(missingOption);
+                        log('Dropdown: Ajout de l\'option non détectée pour ' + serialAssigned);
+                    }
+                    dropdown.value = serialAssigned || '';
+                    if (serialAssigned) {
+                        log('Dropdown initialized with value: ' + serialAssigned);
+                    } else {
+                        log('Dropdown initialized with default value (serial non trouvé ou non assigné)');
+                    }
+                    if (!initialized) {
+                        saveSerialNumber(dropdown.value);
+                        initialized = true;
+                    }
+                })
+                .catch((err) => {
+                    log('Erreur fetch litra-devices: ' + err);
+                    const dropdown = document.getElementById('serialDropdown');
+                    dropdown.innerHTML = '';
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.text = 'Aucun (défaut)';
+                    dropdown.appendChild(defaultOption);
+                    dropdown.value = '';
+                    log('Dropdown fallback: only default option');
+                });
+        }
+        document.getElementById('serialDropdown').addEventListener('change', function() {
+            log('Dropdown changed, new value: ' + this.value);
+            saveSerialNumber(this.value);
         });
-
-        function sendSettings() {
-            if (window.connectElgatoStreamDeckSocket) {
-                window.connectElgatoStreamDeckSocket.send(JSON.stringify({
-                    event: 'setSettings',
-                    context: window.uuid,
-                    payload: settings
-                }));
+        function saveSerialNumber(serialNumber) {
+            if (websocket) {
+                const payload = {};
+                if (serialNumber) {
+                    payload.serialNumber = serialNumber;
+                } else {
+                    payload.serialNumber = null;
+                }
+                const json = {
+                    event: "setSettings",
+                    context: pluginUUID,
+                    payload
+                };
+                log('Sending setSettings: ' + JSON.stringify(payload));
+                websocket.send(JSON.stringify(json));
             }
         }
-
-        // Receive settings
-        window.connectElgatoStreamDeckSocket = {
-            send: function(data) {
-                // This will be overridden by StreamDeck
-            }
-        };
     </script>
 </body>
 </html> 

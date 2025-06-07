@@ -9,7 +9,8 @@
 				}
 			],
 			"Tooltip": "Increase Litra Glow brightness by 25 lumens",
-			"UUID": "com.litra.glow.v2.brightness.up"
+			"UUID": "com.litra.glow.v2.brightness.up",
+			"PropertyInspectorPath": "ui/brightness.html"
 		},
 		{
 			"Icon": "imgs/litra_glow_minus",
@@ -20,7 +21,8 @@
 				}
 			],
 			"Tooltip": "Decrease Litra Glow brightness by 25 lumens",
-			"UUID": "com.litra.glow.v2.brightness.down"
+			"UUID": "com.litra.glow.v2.brightness.down",
+			"PropertyInspectorPath": "ui/brightness.html"
 		},
 		{
 			"Icon": "imgs/litra_glow_cool",
@@ -31,7 +33,8 @@
 				}
 			],
 			"Tooltip": "Increase Litra Glow temperature by 400 K",
-			"UUID": "com.litra.glow.v2.temperature.up"
+			"UUID": "com.litra.glow.v2.temperature.up",
+			"PropertyInspectorPath": "ui/temperature.html"
 		},
 		{
 			"Icon": "imgs/litra_glow_warm",
@@ -42,7 +45,8 @@
 				}
 			],
 			"Tooltip": "Decrease Litra Glow temperature by 400 K",
-			"UUID": "com.litra.glow.v2.temperature.down"
+			"UUID": "com.litra.glow.v2.temperature.down",
+			"PropertyInspectorPath": "ui/temperature.html"
 		},
 		{
 			"Icon": "imgs/litra_glow_on",
@@ -56,7 +60,8 @@
 				}
 			],
 			"Tooltip": "Toggle Litra Glow On/Off",
-			"UUID": "com.litra.glow.v2.toggle"
+			"UUID": "com.litra.glow.v2.toggle",
+			"PropertyInspectorPath": "ui/toggle.html"
 		}
 	],
 	"Author": "ET34N1TY",
@@ -66,7 +71,7 @@
 	"CategoryIcon": "imgs/litra_glow_on",
 	"Icon": "imgs/litra_glow_on",
 	"URL": "https://github.com/timrogers/litra",
-	"Version": "2.1.1.0",
+	"Version": "2.2.0.0",
 	"OS": [
 		{
 			"Platform": "mac",

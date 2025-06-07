@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Litra Glow Toggle</title>
+    <meta charset="utf-8" />
+    <script src="sdpi-components.js"></script>
+    <link rel="stylesheet" href="../css/sdpi.css">
+</head>
+<body>
+    <div class="sdpi-wrapper">
+        <div class="sdpi-grid">
+        <div class="sdpi-grid-label" id="associationLabel">Lumière :</div>
+            <div class="sdpi-grid-value">
+                <select class="sdpi-item-value" id="serialDropdown"></select>
+            </div>
+        </div>
+    </div>
+    <script>
+        let websocket = null;
+        let pluginUUID = null;
+        let currentSettings = {};
+        let initialized = false;
+        let inInfo = null;
+
+        async function setLocaleLabel(inInfo) {
+            let lang = 'en';
+            try {
+                const info = typeof inInfo === 'string' ? JSON.parse(inInfo) : inInfo;
+                lang = (info.application && info.application.language) || 'en';
+            } catch {}
+            try {
+                const response = await fetch(`../${lang}.json`);
+                const data = await response.json();
+                const label = (data.Localization && data.Localization.Association) || 'Association';
+                document.getElementById('associationLabel').textContent = label + ' :';
+            } catch {
+                document.getElementById('associationLabel').textContent = 'Association :';
+            }
+        }
+
+        function log(msg) {
+            console.log('[Litra PI]', msg);
+        }
+
+        function connectElgatoStreamDeckSocket(inPort, inPluginUUID, inRegisterEvent, inInfoParam) {
+            pluginUUID = inPluginUUID;
+            inInfo = inInfoParam;
+            setLocaleLabel(inInfo);
+            websocket = new WebSocket("ws://127.0.0.1:" + inPort);
+
+            websocket.onopen = function() {
+                const json = {
+                    event: inRegisterEvent,
+                    uuid: inPluginUUID
+                };
+                websocket.send(JSON.stringify(json));
+                log('WebSocket opened, sent registration');
+                // Demande explicite des settings
+                websocket.send(JSON.stringify({
+                    event: "getSettings",
+                    context: pluginUUID
+                }));
+                refreshDevices(); // Toujours charger la liste à l'ouverture
+            };
+
+            websocket.onmessage = function(evt) {
+                const jsonObj = JSON.parse(evt.data);
+                const event = jsonObj.event;
+                const jsonPayload = jsonObj.payload || {};
+
+                if (event === "didReceiveSettings") {
+                    currentSettings = jsonPayload.settings || {};
+                    log('didReceiveSettings: ' + JSON.stringify(currentSettings));
+                    refreshDevices(); // Toujours après MAJ de currentSettings
+                }
+            };
+        }
+
+        function refreshDevices() {
+            log('refreshDevices: valeur assignée = ' + (currentSettings.serialNumber || 'aucune'));
+            fetch('http://localhost:3000/litra-devices')
+                .then(response => response.json())
+                .then(devices => {
+                    log('Devices reçus: ' + JSON.stringify(devices));
+                    const dropdown = document.getElementById('serialDropdown');
+                    dropdown.innerHTML = '';
+                    // Option par défaut
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.text = 'Aucun (défaut)';
+                    dropdown.appendChild(defaultOption);
+                    // Devices détectés
+                    devices.forEach(device => {
+                        log('Ajout device au dropdown: ' + device.serial_number);
+                        const option = document.createElement('option');
+                        option.value = device.serial_number;
+                        option.text = `${device.name} (${device.serial_number})`;
+                        dropdown.appendChild(option);
+                    });
+                    // Ajoute l'option pour le numéro assigné non détecté si besoin
+                    const serialAssigned = currentSettings.serialNumber;
+                    if (serialAssigned && !Array.from(dropdown.options).some(opt => opt.value === serialAssigned)) {
+                        const missingOption = document.createElement('option');
+                        missingOption.value = serialAssigned;
+                        missingOption.text = `Non détecté (${serialAssigned})`;
+                        dropdown.appendChild(missingOption);
+                        log('Dropdown: Ajout de l\'option non détectée pour ' + serialAssigned);
+                    }
+                    // Sélectionne la valeur assignée ou défaut
+                    dropdown.value = serialAssigned || '';
+                    if (serialAssigned) {
+                        log('Dropdown initialized with value: ' + serialAssigned);
+                    } else {
+                        log('Dropdown initialized with default value (serial non trouvé ou non assigné)');
+                    }
+                    // Forcer l'envoi du setting à la première initialisation uniquement
+                    if (!initialized) {
+                        saveSerialNumber(dropdown.value);
+                        initialized = true;
+                    }
+                })
+                .catch((err) => {
+                    log('Erreur fetch litra-devices: ' + err);
+                    // En cas d'erreur, on garde au moins l'option défaut
+                    const dropdown = document.getElementById('serialDropdown');
+                    dropdown.innerHTML = '';
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.text = 'Aucun (défaut)';
+                    dropdown.appendChild(defaultOption);
+                    dropdown.value = '';
+                    log('Dropdown fallback: only default option');
+                });
+        }
+
+        document.getElementById('serialDropdown').addEventListener('change', function() {
+            log('Dropdown changed, new value: ' + this.value);
+            saveSerialNumber(this.value);
+        });
+
+        function saveSerialNumber(serialNumber) {
+            if (websocket) {
+                const payload = {};
+                if (serialNumber) {
+                    payload.serialNumber = serialNumber;
+                } else {
+                    payload.serialNumber = null; // Désassigner
+                }
+                const json = {
+                    event: "setSettings",
+                    context: pluginUUID,
+                    payload
+                };
+                log('Sending setSettings: ' + JSON.stringify(payload));
+                websocket.send(JSON.stringify(json));
+            }
+        }
+    </script>
+</body>
+</html> 

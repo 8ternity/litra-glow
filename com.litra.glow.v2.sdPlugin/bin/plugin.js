@@ -8200,11 +8200,11 @@ async function main() {
         });
         // Import and register actions
         console.log('[Plugin] Importing action classes...');
-        const { BrightnessUpAction } = await Promise.resolve().then(function () { return require('./brightness-up-CH-7M9ux.js'); });
-        const { BrightnessDownAction } = await Promise.resolve().then(function () { return require('./brightness-down-CVcScVWw.js'); });
-        const { TemperatureUpAction } = await Promise.resolve().then(function () { return require('./temperature-up-B6EXjWDc.js'); });
-        const { TemperatureDownAction } = await Promise.resolve().then(function () { return require('./temperature-down-DQL0Ux6j.js'); });
-        const { ToggleLightAction } = await Promise.resolve().then(function () { return require('./toggle-light-C9U9ZAlx.js'); });
+        const { BrightnessUpAction } = await Promise.resolve().then(function () { return require('./brightness-up-k15ILVBI.js'); });
+        const { BrightnessDownAction } = await Promise.resolve().then(function () { return require('./brightness-down-DHNnXSuj.js'); });
+        const { TemperatureUpAction } = await Promise.resolve().then(function () { return require('./temperature-up-Bt87HaYO.js'); });
+        const { TemperatureDownAction } = await Promise.resolve().then(function () { return require('./temperature-down-DZBWuSFi.js'); });
+        const { ToggleLightAction } = await Promise.resolve().then(function () { return require('./toggle-light-BpJOgD9A.js'); });
         console.log('[Plugin] Registering actions...');
         // Register all actions
         streamDeck.actions.registerAction(new BrightnessUpAction());
