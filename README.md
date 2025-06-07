@@ -31,7 +31,7 @@
    - Verify that your Litra Glow is properly detected.
 
 
-   > **Note for developers:**
+   **Note for developers:**
    > If you want to build or modify the plugin source, you should also run:
    > ```powershell
    > npm install --save-dev @types/express @types/cors
