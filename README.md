@@ -45,7 +45,7 @@
 
 5. **Add actions to your Stream Deck**
    - Drag and drop actions from the Stream Deck library
-   - Click on the action button added; select which light you want to assign the action
+   - Click on the action button you've added and select which 'light' you want to assign the action
    - Repeate the same step for each actions added to your stream deck
 
 ### Bridge litra-devices
