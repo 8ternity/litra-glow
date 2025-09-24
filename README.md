@@ -40,7 +40,7 @@
    > These are only needed for TypeScript development, not for running the plugin.
 
 4. **Install the Stream Deck plugin**
-   - Download the `com.litra.glow.v2.streamDeckPlugin` file
+   - Download the `com.litra.glow.v2.1.streamDeckPlugin` file
    - Double-click the file to install the plugin in Stream Deck
 
 5. **Add actions to your Stream Deck**
