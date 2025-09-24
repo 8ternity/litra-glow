@@ -44,7 +44,7 @@ type Settings = {
   brightness?: number;
 };
 
-@action({ UUID: 'com.litra.glow.v2.brightness.up' })
+@action({ UUID: 'com.litra.glow.v2.1.brightness.up' })
 export class BrightnessUpAction extends SingletonAction<Settings> {
   
   private lastRequestedLumens: number | null = null;

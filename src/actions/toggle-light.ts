@@ -19,11 +19,29 @@ function logToFile(message: string) {
   }
 }
 
-// Chemins vers les fichiers SVG externes
-const SVG_LIGHT_ON_PATH = path.join(__dirname, '../../imgs/litra_glow_on.svg');
-const SVG_LIGHT_OFF_PATH = path.join(__dirname, '../../imgs/litra_glow_off.svg');
+// Chemins vers les fichiers SVG externes (relatifs au plugin installé)
+const getPluginPath = () => {
+  // En mode développement ou production, on cherche le dossier imgs au bon endroit
+  const possiblePaths = [
+    path.join(__dirname, '../../imgs'), // Chemin de développement
+    path.join(process.cwd(), 'imgs'),   // Chemin du plugin installé
+    path.join(__dirname, '../imgs'),    // Autre chemin possible
+  ];
+  
+  for (const basePath of possiblePaths) {
+    if (fs.existsSync(path.join(basePath, 'litra_glow_on.svg'))) {
+      return basePath;
+    }
+  }
+  
+  // Fallback vers le chemin de développement
+  return path.join(__dirname, '../../imgs');
+};
 
-@action({ UUID: 'com.litra.glow.v2.toggle' })
+const SVG_LIGHT_ON_PATH = path.join(getPluginPath(), 'litra_glow_on.svg');
+const SVG_LIGHT_OFF_PATH = path.join(getPluginPath(), 'litra_glow_off.svg');
+
+@action({ UUID: 'com.litra.glow.v2.1.toggle' })
 export class ToggleLightAction extends SingletonAction<Settings> {
   private currentState = 0; // Track state internally
   

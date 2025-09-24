@@ -1,0 +1,99 @@
+[2025-09-23T23:55:20.296Z] [onWillAppear] Appelée
+[2025-09-23T23:55:20.297Z] [onWillAppear] serialNumber dans settings: null
+[2025-09-23T23:55:20.297Z] [checkLightStatus] Vérification de l'état de la lumière...
+[2025-09-23T23:55:20.298Z] [executeLitraCommand] Exécution: npx litra-devices
+[2025-09-23T23:55:21.169Z] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): Off 🌑
+  - Brightness: 84 lm
+  - Temperature: 5000 K
+[2025-09-23T23:55:21.169Z] [checkLightStatus] Sortie litra-devices:
+- Logitech Litra Glow (2141FE004UG8): Off 🌑
+  - Brightness: 84 lm
+  - Temperature: 5000 K
+[2025-09-23T23:55:21.170Z] [checkLightStatus] Lumière (premier bloc) OFF
+[2025-09-23T23:55:21.170Z] [onWillAppear] État initial: 0
+[2025-09-23T23:55:21.170Z] [updateIcon] Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_off.svg
+[2025-09-23T23:55:21.171Z] [updateIcon] Erreur lors de la mise à jour de l'icône: Error: Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_off.svg
+[2025-09-23T23:58:12.281Z] [onWillAppear] Appelée
+[2025-09-23T23:58:12.282Z] [onWillAppear] serialNumber dans settings: undefined
+[2025-09-23T23:58:12.282Z] [checkLightStatus] Vérification de l'état de la lumière...
+[2025-09-23T23:58:12.283Z] [executeLitraCommand] Exécution: npx litra-devices
+[2025-09-23T23:58:13.268Z] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): Off 🌑
+  - Brightness: 84 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:13.269Z] [checkLightStatus] Sortie litra-devices:
+- Logitech Litra Glow (2141FE004UG8): Off 🌑
+  - Brightness: 84 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:13.269Z] [checkLightStatus] Lumière (premier bloc) OFF
+[2025-09-23T23:58:13.269Z] [onWillAppear] État initial: 0
+[2025-09-23T23:58:13.270Z] [updateIcon] Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_off.svg
+[2025-09-23T23:58:13.270Z] [updateIcon] Erreur lors de la mise à jour de l'icône: Error: Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_off.svg
+[2025-09-23T23:58:13.386Z] [onKeyDown] Appelée - état courant: 0
+[2025-09-23T23:58:13.386Z] [onKeyDown] serialNumber dans settings: null
+[2025-09-23T23:58:13.387Z] [executeLitraCommand] Exécution: npx litra-toggle
+[2025-09-23T23:58:14.110Z] [executeLitraCommand] Succès: 
+[2025-09-23T23:58:14.110Z] [onKeyDown] Nouvel état: 1
+[2025-09-23T23:58:14.110Z] [updateIcon] Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_on.svg
+[2025-09-23T23:58:14.111Z] [updateIcon] Erreur lors de la mise à jour de l'icône: Error: Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_on.svg
+[2025-09-23T23:58:14.111Z] [onKeyDown] Action terminée avec succès
+[2025-09-23T23:58:15.226Z] [onKeyDown] Appelée - état courant: 1
+[2025-09-23T23:58:15.226Z] [onKeyDown] serialNumber dans settings: null
+[2025-09-23T23:58:15.227Z] [executeLitraCommand] Exécution: npx litra-toggle
+[2025-09-23T23:58:15.861Z] [executeLitraCommand] Succès: 
+[2025-09-23T23:58:15.862Z] [onKeyDown] Nouvel état: 0
+[2025-09-23T23:58:15.862Z] [updateIcon] Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_off.svg
+[2025-09-23T23:58:15.862Z] [updateIcon] Erreur lors de la mise à jour de l'icône: Error: Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_off.svg
+[2025-09-23T23:58:15.862Z] [onKeyDown] Action terminée avec succès
+[2025-09-23T23:58:45.061Z] [onWillAppear] Appelée
+[2025-09-23T23:58:45.061Z] [onWillAppear] serialNumber dans settings: null
+[2025-09-23T23:58:45.061Z] [checkLightStatus] Vérification de l'état de la lumière...
+[2025-09-23T23:58:45.061Z] [executeLitraCommand] Exécution: npx litra-devices
+[2025-09-23T23:58:45.882Z] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): Off 🌑
+  - Brightness: 59 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:45.882Z] [onKeyDown] Appelée - état courant: 0
+[2025-09-23T23:58:45.882Z] [onKeyDown] serialNumber dans settings: null
+[2025-09-23T23:58:45.882Z] [executeLitraCommand] Exécution: npx litra-toggle
+[2025-09-23T23:58:46.517Z] [executeLitraCommand] Succès: 
+[2025-09-23T23:58:46.518Z] [checkLightStatus] Sortie litra-devices:
+- Logitech Litra Glow (2141FE004UG8): Off 🌑
+  - Brightness: 59 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:46.518Z] [checkLightStatus] Lumière (premier bloc) OFF
+[2025-09-23T23:58:46.518Z] [onKeyDown] Nouvel état: 1
+[2025-09-23T23:58:46.518Z] [onWillAppear] État initial: 0
+[2025-09-23T23:58:46.518Z] [updateIcon] Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_off.svg
+[2025-09-23T23:58:46.519Z] [updateIcon] Erreur lors de la mise à jour de l'icône: Error: Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_off.svg
+[2025-09-23T23:58:46.519Z] [updateIcon] Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_off.svg
+[2025-09-23T23:58:46.519Z] [updateIcon] Erreur lors de la mise à jour de l'icône: Error: Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_off.svg
+[2025-09-23T23:58:46.519Z] [onKeyDown] Action terminée avec succès
+[2025-09-23T23:58:54.347Z] [onWillAppear] Appelée
+[2025-09-23T23:58:54.347Z] [onWillAppear] serialNumber dans settings: null
+[2025-09-23T23:58:54.348Z] [checkLightStatus] Vérification de l'état de la lumière...
+[2025-09-23T23:58:54.348Z] [executeLitraCommand] Exécution: npx litra-devices
+[2025-09-23T23:58:55.189Z] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 109 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:55.189Z] [checkLightStatus] Sortie litra-devices:
+- Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 109 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:55.190Z] [checkLightStatus] Lumière (premier bloc) ON
+[2025-09-23T23:58:55.190Z] [onWillAppear] État initial: 1
+[2025-09-23T23:58:55.190Z] [updateIcon] Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_on.svg
+[2025-09-23T23:58:55.190Z] [updateIcon] Erreur lors de la mise à jour de l'icône: Error: Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_on.svg
+[2025-09-24T00:08:34.807Z] [onWillAppear] Appelée
+[2025-09-24T00:08:34.807Z] [onWillAppear] serialNumber dans settings: null
+[2025-09-24T00:08:34.808Z] [checkLightStatus] Vérification de l'état de la lumière...
+[2025-09-24T00:08:34.808Z] [executeLitraCommand] Exécution: npx litra-devices
+[2025-09-24T00:08:35.719Z] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 109 lm
+  - Temperature: 5000 K
+[2025-09-24T00:08:35.719Z] [checkLightStatus] Sortie litra-devices:
+- Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 109 lm
+  - Temperature: 5000 K
+[2025-09-24T00:08:35.719Z] [checkLightStatus] Lumière (premier bloc) ON
+[2025-09-24T00:08:35.719Z] [onWillAppear] État initial: 1
+[2025-09-24T00:08:35.720Z] [updateIcon] Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_on.svg
+[2025-09-24T00:08:35.720Z] [updateIcon] Erreur lors de la mise à jour de l'icône: Error: Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_on.svg

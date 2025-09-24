@@ -1,0 +1,78 @@
+[2025-09-23T23:58:36.865Z] [onWillAppear] Appelée
+[2025-09-23T23:58:36.865Z] [onWillAppear] serialNumber dans settings: undefined
+[2025-09-23T23:58:36.865Z] [executeLitraCommand] Exécution: npx litra-devices
+[2025-09-23T23:58:37.830Z] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): Off 🌑
+  - Brightness: 84 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:37.831Z] [getCurrentBrightness] Sortie complète de litra-devices:
+- Logitech Litra Glow (2141FE004UG8): Off 🌑
+  - Brightness: 84 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:37.831Z] [getCurrentBrightness] Luminosité trouvée: 84 lm
+[2025-09-23T23:58:37.832Z] [updateIcon] Icône mise à jour avec succès
+[2025-09-23T23:58:37.832Z] [onWillAppear] Action initialisée avec luminosité: 84 lm
+[2025-09-23T23:58:47.319Z] [onWillAppear] Appelée
+[2025-09-23T23:58:47.319Z] [onWillAppear] serialNumber dans settings: null
+[2025-09-23T23:58:47.319Z] [executeLitraCommand] Exécution: npx litra-devices
+[2025-09-23T23:58:48.140Z] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 59 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:49.796Z] [getCurrentBrightness] Sortie complète de litra-devices:
+- Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 59 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:49.797Z] [getCurrentBrightness] Luminosité trouvée: 59 lm
+[2025-09-23T23:58:49.798Z] [updateIcon] Icône mise à jour avec succès
+[2025-09-23T23:58:49.798Z] [onWillAppear] Action initialisée avec luminosité: 59 lm
+[2025-09-23T23:58:49.799Z] [onKeyDown] Appelée
+[2025-09-23T23:58:49.799Z] [onKeyDown] serialNumber dans settings: null
+[2025-09-23T23:58:49.800Z] [executeLitraCommand] Exécution: npx litra-devices
+[2025-09-23T23:58:50.605Z] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 59 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:50.606Z] [getCurrentBrightness] Sortie complète de litra-devices:
+- Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 59 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:50.606Z] [getCurrentBrightness] Luminosité trouvée: 59 lm
+[2025-09-23T23:58:50.606Z] [onKeyDown] Luminosité actuelle: 59 lm
+[2025-09-23T23:58:50.606Z] [onKeyDown] Nouvelle luminosité calculée: 84 lm (59 + 25)
+[2025-09-23T23:58:50.606Z] [onKeyDown] Application de la nouvelle luminosité: 84 lm
+[2025-09-23T23:58:50.607Z] [executeLitraCommand] Exécution: npx litra-brightness-lm 84
+[2025-09-23T23:58:51.243Z] [executeLitraCommand] Succès: 
+[2025-09-23T23:58:51.244Z] [executeLitraCommand] Exécution: npx litra-devices
+[2025-09-23T23:58:52.073Z] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 84 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:52.073Z] [getCurrentBrightness] Sortie complète de litra-devices:
+- Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 84 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:52.073Z] [getCurrentBrightness] Luminosité trouvée: 84 lm
+[2025-09-23T23:58:52.073Z] [onKeyDown] Vérification après application: 84 lm
+[2025-09-23T23:58:52.074Z] [onKeyDown] Appelée
+[2025-09-23T23:58:52.074Z] [onKeyDown] serialNumber dans settings: null
+[2025-09-23T23:58:52.074Z] [executeLitraCommand] Exécution: npx litra-devices
+[2025-09-23T23:58:52.885Z] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 84 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:52.886Z] [getCurrentBrightness] Sortie complète de litra-devices:
+- Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 84 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:52.886Z] [getCurrentBrightness] Luminosité trouvée: 84 lm
+[2025-09-23T23:58:52.886Z] [onKeyDown] Luminosité actuelle: 84 lm
+[2025-09-23T23:58:52.886Z] [onKeyDown] Nouvelle luminosité calculée: 109 lm (84 + 25)
+[2025-09-23T23:58:52.887Z] [onKeyDown] Application de la nouvelle luminosité: 109 lm
+[2025-09-23T23:58:52.887Z] [executeLitraCommand] Exécution: npx litra-brightness-lm 109
+[2025-09-23T23:58:53.522Z] [executeLitraCommand] Succès: 
+[2025-09-23T23:58:53.522Z] [executeLitraCommand] Exécution: npx litra-devices
+[2025-09-23T23:58:54.346Z] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 109 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:54.346Z] [getCurrentBrightness] Sortie complète de litra-devices:
+- Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 109 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:54.347Z] [getCurrentBrightness] Luminosité trouvée: 109 lm
+[2025-09-23T23:58:54.347Z] [onKeyDown] Vérification après application: 109 lm

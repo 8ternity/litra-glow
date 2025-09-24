@@ -9,7 +9,7 @@
 				}
 			],
 			"Tooltip": "Increase Litra Glow brightness by 25 lumens",
-			"UUID": "com.litra.glow.v2.brightness.up",
+			"UUID": "com.litra.glow.v2.1.brightness.up",
 			"PropertyInspectorPath": "ui/brightness.html"
 		},
 		{
@@ -21,7 +21,7 @@
 				}
 			],
 			"Tooltip": "Decrease Litra Glow brightness by 25 lumens",
-			"UUID": "com.litra.glow.v2.brightness.down",
+			"UUID": "com.litra.glow.v2.1.brightness.down",
 			"PropertyInspectorPath": "ui/brightness.html"
 		},
 		{
@@ -33,7 +33,7 @@
 				}
 			],
 			"Tooltip": "Increase Litra Glow temperature by 400 K",
-			"UUID": "com.litra.glow.v2.temperature.up",
+			"UUID": "com.litra.glow.v2.1.temperature.up",
 			"PropertyInspectorPath": "ui/temperature.html"
 		},
 		{
@@ -45,7 +45,7 @@
 				}
 			],
 			"Tooltip": "Decrease Litra Glow temperature by 400 K",
-			"UUID": "com.litra.glow.v2.temperature.down",
+			"UUID": "com.litra.glow.v2.1.temperature.down",
 			"PropertyInspectorPath": "ui/temperature.html"
 		},
 		{
@@ -60,7 +60,7 @@
 				}
 			],
 			"Tooltip": "Toggle Litra Glow On/Off",
-			"UUID": "com.litra.glow.v2.toggle",
+			"UUID": "com.litra.glow.v2.1.toggle",
 			"PropertyInspectorPath": "ui/toggle.html"
 		}
 	],

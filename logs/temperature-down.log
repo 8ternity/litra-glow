@@ -1,0 +1,26 @@
+[2025-09-23T23:58:41.189Z] [onWillAppear] Appelée
+[2025-09-23T23:58:41.189Z] [onWillAppear] serialNumber dans settings: undefined
+[2025-09-23T23:58:41.190Z] [executeLitraCommand] Exécution: npx litra-devices
+[2025-09-23T23:58:42.106Z] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): Off 🌑
+  - Brightness: 84 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:42.106Z] [getCurrentTemperature] Sortie complète de litra-devices:
+- Logitech Litra Glow (2141FE004UG8): Off 🌑
+  - Brightness: 84 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:42.107Z] [getCurrentTemperature] Température trouvée: 5000 K
+[2025-09-23T23:58:42.107Z] [updateIcon] Icône mise à jour avec succès
+[2025-09-23T23:58:42.107Z] [onWillAppear] Action initialisée avec température: 5000 K
+[2025-09-23T23:58:46.519Z] [onWillAppear] Appelée
+[2025-09-23T23:58:46.520Z] [onWillAppear] serialNumber dans settings: null
+[2025-09-23T23:58:46.520Z] [executeLitraCommand] Exécution: npx litra-devices
+[2025-09-23T23:58:47.319Z] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 59 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:49.796Z] [getCurrentTemperature] Sortie complète de litra-devices:
+- Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 59 lm
+  - Temperature: 5000 K
+[2025-09-23T23:58:49.796Z] [getCurrentTemperature] Température trouvée: 5000 K
+[2025-09-23T23:58:49.798Z] [updateIcon] Icône mise à jour avec succès
+[2025-09-23T23:58:49.798Z] [onWillAppear] Action initialisée avec température: 5000 K

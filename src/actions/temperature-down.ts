@@ -42,7 +42,7 @@ type Settings = {
   serialNumber?: string;
 };
 
-@action({ UUID: 'com.litra.glow.v2.temperature.down' })
+@action({ UUID: 'com.litra.glow.v2.1.temperature.down' })
 export class TemperatureDownAction extends SingletonAction<Settings> {
   
   private async executeLitraCommand(command: string, serialNumber?: string): Promise<string> {

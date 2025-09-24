@@ -1,0 +1,45 @@
+2025-09-23 20:08:34,70 - Plugin batch starting 
+Arguments: -port 28196 -pluginUUID 82562c6de484abe2c7a0b4f24a784122 -registerEvent registerPlugin -info "{\"application\":{\"font\":\"Segoe UI\",\"language\":\"en\",\"platform\":\"windows\",\"platformVersion\":\"10.0.26100\",\"version\":\"7.0.1.22055\"},\"colors\":{\"buttonMouseOverBackgroundColor\":\"#464646FF\",\"buttonPressedBackgroundColor\":\"#303030FF\",\"buttonPressedBorderColor\":\"#646464FF\",\"buttonPressedTextColor\":\"#969696FF\",\"highlightColor\":\"#0078FFFF\"},\"devicePixelRatio\":1,\"devices\":[{\"id\":\"b6a9cb72a6da2b5f94e5ea72a14be3de\",\"name\":\"Stream Deck Neo\",\"size\":{\"columns\":4,\"rows\":2},\"type\":9}],\"plugin\":{\"uuid\":\"com.litra.glow.v2.1\",\"version\":\"2.2.1.1\"}}" 
+Current directory: C:\Users\ET34N1TY\AppData\Roaming\Elgato\StreamDeck\Plugins\com.litra.glow.v2.1.sdPlugin 
+Node version: 
+v22.16.0
+Starting plugin... 
+[Plugin] Starting Litra Glow plugin...
+[Plugin] Process arguments: [
+  '-port',
+  '28196',
+  '-pluginUUID',
+  '82562c6de484abe2c7a0b4f24a784122',
+  '-registerEvent',
+  'registerPlugin',
+  '-info',
+  '{"application":{"font":"Segoe UI","language":"en","platform":"windows","platformVersion":"10.0.26100","version":"7.0.1.22055"},"colors":{"buttonMouseOverBackgroundColor":"#464646FF","buttonPressedBackgroundColor":"#303030FF","buttonPressedBorderColor":"#646464FF","buttonPressedTextColor":"#969696FF","highlightColor":"#0078FFFF"},"devicePixelRatio":1,"devices":[{"id":"b6a9cb72a6da2b5f94e5ea72a14be3de","name":"Stream Deck Neo","size":{"columns":4,"rows":2},"type":9}],"plugin":{"uuid":"com.litra.glow.v2.1","version":"2.2.1.1"}}'
+]
+[Plugin] Parsed arguments: {
+  port: '28196',
+  pluginUUID: '82562c6de484abe2c7a0b4f24a784122',
+  registerEvent: 'registerPlugin',
+  info: 'received'
+}
+[Plugin] Importing action classes...
+[Plugin] Registering actions...
+[Plugin] All actions registered
+[Plugin] Connecting to Stream Deck...
+Litra Devices Bridge running on http://localhost:3000
+[Plugin] ✅ Successfully connected to Stream Deck!
+[Plugin] Plugin initialization complete - ready to receive events
+[ToggleLight] [onWillAppear] Appelée
+[ToggleLight] [onWillAppear] serialNumber dans settings: null
+[ToggleLight] [checkLightStatus] Vérification de l'état de la lumière...
+[ToggleLight] [executeLitraCommand] Exécution: npx litra-devices
+[ToggleLight] [executeLitraCommand] Succès: - Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 109 lm
+  - Temperature: 5000 K
+[ToggleLight] [checkLightStatus] Sortie litra-devices:
+- Logitech Litra Glow (2141FE004UG8): On 💡
+  - Brightness: 109 lm
+  - Temperature: 5000 K
+[ToggleLight] [checkLightStatus] Lumière (premier bloc) ON
+[ToggleLight] [onWillAppear] État initial: 1
+[ToggleLight] [updateIcon] Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_on.svg
+[ToggleLight] [updateIcon] Erreur lors de la mise à jour de l'icône: Error: Fichier SVG introuvable: C:\Users\ET34N1TY\Documents\CURSOR_litra\imgs\litra_glow_on.svg
