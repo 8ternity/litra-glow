@@ -18,14 +18,15 @@
 
 1. **Install Node.js for Windows**
    - Download and install from: https://nodejs.org/en/download
-   ** If you install version 22 and later, make sure to add the new PATH in Windows Environement; located in C:\Program Files\nodjs\ and restart Windows. NPM command can not be resolved. Don't know why newer version doesn't add the proper environement variable. **
-
-2. **Install the GitHub project "Logitech Litra Glow CLI 'litra'" with Node in PowerShell or CMD**
+   
+   NOTE: If you install version 22 or later, make sure to manually add the new PATH to the Windows Environment Variables. The path is typically located at C:\Program Files\nodejs\. After adding the path, restart your computer. Otherwise, the NPM command may not be recognized. It's unclear why newer versions don't automatically update the environment variables.
+   
+3. **Install the GitHub project "Logitech Litra Glow CLI 'litra'" with Node in PowerShell or CMD**
    ```CMD/PowerShell
    npm install --save litra
    ```
 
-3. **Test light detection**
+4. **Test light detection**
    - In CDM or PowerShell, run:
    ```CMD/PowerShell
    litra-devices
@@ -40,11 +41,11 @@
    > ```
    > These are only needed for TypeScript development, not for running the plugin.
 
-4. **Install the Stream Deck plugin**
+5. **Install the Stream Deck plugin**
    - Download the `com.litra.glow.v2.1.streamDeckPlugin` file
    - Double-click the file to install the plugin in Stream Deck
 
-5. **Add actions to your Stream Deck**
+6. **Add actions to your Stream Deck**
    - Drag and drop actions from the Stream Deck library
    - Click on the action button you've added and select which 'light' you want to assign the action
    - Repeate the same step for each actions added to your stream deck
