@@ -18,15 +18,16 @@
 
 1. **Install Node.js for Windows**
    - Download and install from: https://nodejs.org/en/download
+   ** If you install version 22 and later, make sure to add the new PATH in Windows Environement; located in C:\Program Files\nodjs\ and restart Windows. NPM command can not be resolved. Don't know why newer version doesn't add the proper environement variable. **
 
-2. **Install the GitHub project "Logitech Litra Glow CLI 'litra'" with Node in PowerShell**
-   ```powershell
+2. **Install the GitHub project "Logitech Litra Glow CLI 'litra'" with Node in PowerShell or CMD**
+   ```CMD/PowerShell
    npm install --save litra
    ```
 
 3. **Test light detection**
-   - In PowerShell, run:
-   ```powershell
+   - In CDM or PowerShell, run:
+   ```CMD/PowerShell
    litra-devices
    ```
    - Verify that your Litra Glow is properly detected.
