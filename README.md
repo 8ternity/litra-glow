@@ -34,7 +34,7 @@
    litra-devices
    ```
    - Verify that your Litra Glow is properly detected.
-   - If the command not working, install instead 
+   - If the command not responding, use this installer command method instead:
       ```CMD/PowerShell
       npm install -g litra
       ```
