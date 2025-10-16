@@ -35,9 +35,9 @@
    ```
    - Verify that your Litra Glow is properly detected.
    - If the command not working, install instead 
-   '''
+      '''
    npm install -g litra
-   '''
+      '''
    -- Test again if the command is working after the new packaged installed.
 
 
