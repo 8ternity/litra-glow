@@ -23,7 +23,7 @@
    
 3. **Install the GitHub project "Logitech Litra Glow CLI 'litra'" with Node in PowerShell or CMD**
    ```CMD/PowerShell
-   npm install --save litra
+   npm install -g litra
    ```
 
 
@@ -34,11 +34,6 @@
    litra-devices
    ```
    - Verify that your Litra Glow is properly detected.
-   - If the command not responding, use this installer command method instead:
-      ```CMD/PowerShell
-      npm install -g litra
-      ```
-   -- Test again if the command is working after the new packaged installed.
 
 
    **Note for developers:**
