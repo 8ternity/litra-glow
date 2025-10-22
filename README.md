@@ -135,6 +135,7 @@ http://localhost:3000/litra-devices
 - **Icons**: High resolution with @2x variants
 
 ## 🆘 Support
+- **NOTE**: After a StreamDeck Plugin Update 7.0.X, reboot your computer. I've discover after updating to 7.0.3 the latest version the plugin seems to give exclamation and after rebooting computer, the plugin worked again.
 
 ### Available Actions
 
