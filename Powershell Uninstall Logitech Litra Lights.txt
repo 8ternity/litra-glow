@@ -1,0 +1,19 @@
+# 1. Arrêter Stream Deck
+Get-Process -Name "Stream Deck" -ErrorAction SilentlyContinue | Stop-Process -Force
+
+# 2. Attendre quelques secondes
+Start-Sleep -Seconds 3
+
+# 3. Supprimer tous les dossiers du plugin (toutes versions)
+Remove-Item -Path "$env:APPDATA\Elgato\StreamDeck\Plugins\com.litra.glow.sdPlugin" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path "$env:APPDATA\Elgato\StreamDeck\Plugins\com.litra.glow.v2.sdPlugin" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path "$env:APPDATA\Elgato\StreamDeck\Plugins\com.litra.glow.v2.1.sdPlugin" -Recurse -Force -ErrorAction SilentlyContinue
+
+# 4. Arrêter les processus Node.js liés au bridge Litra
+Get-Process -Name "node" -ErrorAction SilentlyContinue | Where-Object { $_.CommandLine -and $_.CommandLine -match "litra" } | Stop-Process -Force
+
+# 5. Forcer la suppression des fichiers verrouillés (si nécessaire)
+Get-ChildItem -Path "$env:APPDATA\Elgato\StreamDeck\Plugins\" -Filter "*litra*" -Recurse -Force -ErrorAction SilentlyContinue | ForEach-Object { $_.IsReadOnly = $false; Remove-Item $_.FullName -Force -ErrorAction SilentlyContinue }
+
+# 6. Redémarrer Stream Deck
+Start-Process -FilePath "$env:ProgramFiles\Elgato\StreamDeck\StreamDeck.exe" -ErrorAction SilentlyContinue

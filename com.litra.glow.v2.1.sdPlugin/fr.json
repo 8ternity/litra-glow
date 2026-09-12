@@ -1,0 +1,36 @@
+{
+  "Name": "Litra Glow Lights",
+  "Description": "Contrôlez vos lumières Logitech Litra avec votre Stream Deck",
+  "com.litra.glow.v2.toggle": {
+    "Name": "Lumière On/Off",
+    "Tooltip": "Allume/éteint la lumière Litra sélectionnée"
+  },
+  "com.litra.glow.v2.brightness": {
+    "Name": "Luminosité",
+    "Tooltip": "Ajuster la luminosité"
+  },
+  "com.litra.glow.v2.temperature": {
+    "Name": "Température",
+    "Tooltip": "Ajuster la température"
+  },
+  "com.litra.glow.v2.brightness.up": {
+    "Name": "Luminosité +25 lm",
+    "Tooltip": "Augmenter la luminosité de 25 lumens"
+  },
+  "com.litra.glow.v2.brightness.down": {
+    "Name": "Luminosité -25 lm",
+    "Tooltip": "Diminuer la luminosité de 25 lumens"
+  },
+  "com.litra.glow.v2.temperature.up": {
+    "Name": "Température +400 K",
+    "Tooltip": "Augmenter la température de 400 K"
+  },
+  "com.litra.glow.v2.temperature.down": {
+    "Name": "Température -400 K",
+    "Tooltip": "Diminuer la température de 400 K"
+  },
+  "Localization": {
+    "Association": "Lumière",
+    "Title": "Titre"
+  }
+} 

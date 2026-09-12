@@ -1,0 +1,14 @@
+# Dépendances
+node_modules/
+
+# Logs d'exécution du plugin et de dev
+logs/
+*.log
+
+# Paquet Stream Deck (distribué via les GitHub Releases, pas versionné)
+*.streamDeckPlugin
+
+# Divers
+.opencode/
+.DS_Store
+Thumbs.db
